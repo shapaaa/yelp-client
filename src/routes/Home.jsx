@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-
+import Header from '../Components/Header';
+import AddRestaurant from '../Components/AddRestaurant'
+import RestaurantList from '../Components/RestaurantList';
 
 const Container = styled.div`
 
@@ -8,7 +10,9 @@ const Container = styled.div`
 const Home = () =>{
     return (
      <Container>
-        Home
+         <Header/>
+         <AddRestaurant/>
+         <RestaurantList/>
      </Container>
     );
 }

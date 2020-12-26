@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import RestaurantApi from '../apis/RestaurantApi';
 
 const UpdateRestaurant = () => {
@@ -14,7 +13,9 @@ const UpdateRestaurant = () => {
 	// ** which we fetch in home page so using useEffect
 	useEffect(() => {
 		const fetchRestaurant = async () => {
-			const { data } = await RestaurantApi.get(`/${id}`);
+			const {
+				data: { data },
+			} = await RestaurantApi.get(`/${id}`);
 			const { name, location, price_range } = data.restaurant;
 			setName(name);
 			setLocation(location);

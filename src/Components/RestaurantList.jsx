@@ -3,17 +3,27 @@ import styled from 'styled-components';
 import RestaurantApi from '../apis/RestaurantApi';
 import { useHistory } from 'react-router-dom';
 import { RestaurantContext } from './context/RestaurantContext';
+import StarRating from '../Components/StarRating';
 
 const Container = styled.div`
 	margin-top: 40px;
 `;
+export const renderRating = (rating, count) => {
+	if (count === 0) return <span className='text-warning'>0 reviews</span>;
+	return (
+		<>
+			<StarRating rating={rating} />
+			<span className='text-warning ms-2'>({count})</span>
+		</>
+	);
+};
 const RestaurantList = () => {
 	const { restaurants, setRestaurants } = useContext(RestaurantContext);
 	let history = useHistory();
 	useEffect(() => {
 		const fetchRestaurants = async () => {
-			const data = await RestaurantApi.get('/');
-			setRestaurants(data.data.restaurants);
+			const { data } = await RestaurantApi.get('/');
+			setRestaurants(data.restaurants);
 		};
 		fetchRestaurants();
 	}, []);
@@ -51,7 +61,7 @@ const RestaurantList = () => {
 								<td scope='row'>{restaurant.name}</td>
 								<td>{restaurant.location}</td>
 								<td>{'$'.repeat(restaurant.price_range)}</td>
-								<td>{restaurant.price_range}</td>
+								<td>{renderRating(restaurant.average_rating, restaurant.count)}</td>
 								<td>
 									<button
 										onClick={(e) => handleUpdate(e, restaurant.id)}
